@@ -1,0 +1,12 @@
+#headLine {
+    text-align: center;
+}
+#mainTable {
+    margin: auto;
+    border: 1px solid black;
+}
+
+#resultsTable {
+    margin: auto;
+    border: 1px solid black;
+}
