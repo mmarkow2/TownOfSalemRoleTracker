@@ -16,3 +16,11 @@
     display: inline-block;
     border: 1px solid black;
 }
+
+.unverifiedSpan {
+    color: red;
+}
+
+.verifiedSpan {
+    color: green;
+}

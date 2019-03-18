@@ -74,8 +74,14 @@ function generateResultsTable() {
             type = 'RT';
         }
         
-        $('#' + type + (gameRoles[type] - availableRoles[type])).text(player);
-        availableRoles[type] -= 1;
+        //if there is a conflict
+        if (availableRoles[type] < 1) {
+            $('#' + type + '0').append(' - <span class="verifiedSpan">' + player + '</span>');
+        }
+        else {
+            $('#' + type + (gameRoles[type] - availableRoles[type])).html('<span class="verifiedSpan">' + player + '</span>');
+            availableRoles[type] -= 1;
+        }
     });
     $('#mainTable tr').has(':checkbox:not(:checked)').each(function() {
         var player = $(this).find('.player').val();
@@ -88,10 +94,10 @@ function generateResultsTable() {
         
         //if there is a conflict
         if (availableRoles[type] < 1) {
-            
+            $('#' + type + '0').append(' - <span class="unverifiedSpan">' + player + '</span>');
         }
         else {
-            $('#' + type + (gameRoles[type] - availableRoles[type])).text(player);
+            $('#' + type + (gameRoles[type] - availableRoles[type])).html('<span class="unverifiedSpan">' + player + '</span>');
             availableRoles[type] -= 1;
         }
     });
