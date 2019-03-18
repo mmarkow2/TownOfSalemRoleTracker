@@ -27,7 +27,7 @@ var roles = {
     WITCH: "NE",
     ARSONIST: "NK",
     SERIAL_KILLER: "NK",
-    WITCH: "NK"
+    WEREWOLF: "NK"
 };
 
 var gameRoles = {
@@ -40,7 +40,7 @@ var gameRoles = {
     MAF: 4,
     NE: 1,
     NK: 1
-}
+};
 
 var prettyPrint = {
     J: "Jailor",
@@ -52,11 +52,20 @@ var prettyPrint = {
     MAF: "Mafia",
     NE: "Neutral Evil",
     NK: "Neutral Killing"
+};
+
+function generateRoleCounts() {
+    var result = new Object();
+    for (let gameRole in gameRoles) {
+        result[gameRole] = gameRoles[gameRole];
+    }
+    
+    return result;
 }
 
 function generateResultsTable() {
     $('#resultsTable tr').not(":eq(0)").remove();
-    var availableRoles = gameRoles;
+    var availableRoles = generateRoleCounts();
     $('#mainTable tr').has(':checkbox:checked').each(function() {
         var player = $(this).find('.player').val();
         var role = $(this).find('.role').val();
