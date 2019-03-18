@@ -64,7 +64,6 @@ function generateRoleCounts() {
 }
 
 function generateResultsTable() {
-    $('#resultsTable tr').not(":eq(0)").remove();
     var availableRoles = generateRoleCounts();
     $('#mainTable tr').has(':checkbox:checked').each(function() {
         var player = $(this).find('.player').val();
@@ -75,11 +74,26 @@ function generateResultsTable() {
             type = 'RT';
         }
         
+        $('#' + type + (gameRoles[type] - availableRoles[type])).text(player);
         availableRoles[type] -= 1;
-        $('#resultsTable').append('<tr><td>' + prettyPrint[type] + '</td><td>' + player + '</td></tr>');
     });
     $('#mainTable tr').has(':checkbox:not(:checked)').each(function() {
-
+        var player = $(this).find('.player').val();
+        var role = $(this).find('.role').val();
+        var type = roles[role];
+        
+        if (availableRoles[type] < 1 && (type == 'TI' || type == 'TK' || type == 'TP' || type == 'TS')) {
+            type = 'RT';
+        }
+        
+        //if there is a conflict
+        if (availableRoles[type] < 1) {
+            
+        }
+        else {
+            $('#' + type + (gameRoles[type] - availableRoles[type])).text(player);
+            availableRoles[type] -= 1;
+        }
     });
 }
 
@@ -90,6 +104,13 @@ $(document).ready(function(){
     
     for (let role in roles) {
         $('.role').append('<option value="' + role + '">' + role + '</option>');
+    }
+    
+    //generate initial results table
+    for (let role in gameRoles) {
+        for (i = 0; i < gameRoles[role]; i++) {
+            $('#resultsTable').append('<tr><td>' + prettyPrint[role] + '</td><td id="' + role + i + '"></td></tr>');
+        }
     }
     
     $('.role, .confirmed').change(function() {

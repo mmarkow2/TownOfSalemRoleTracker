@@ -1,12 +1,18 @@
 #headLine {
     text-align: center;
 }
+#tableWrapper {
+    text-align: center;
+}
+#tableWrapper table {
+    margin: 10px;
+}
 #mainTable {
-    margin: auto;
+    display: inline-block;
     border: 1px solid black;
 }
 
 #resultsTable {
-    margin: auto;
+    display: inline-block;
     border: 1px solid black;
 }
