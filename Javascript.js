@@ -66,7 +66,7 @@ function generateRoleCounts() {
 function generateResultsTable() {
     var availableRoles = generateRoleCounts();
     $('.roleResult').text('');
-    $('#mainTable tr').has(':checkbox:checked').each(function() {
+    $('#mainTable tr').has('.confirmed:checked').each(function() {
         var player = $(this).find('.player').val();
         var role = $(this).find('.role').val();
         var type = roles[role];
@@ -80,11 +80,20 @@ function generateResultsTable() {
             $('#' + type + '0').append(' - <span class="verifiedSpan">' + player + ' (' + role + ')</span>');
         }
         else {
-            $('#' + type + (gameRoles[type] - availableRoles[type])).html('<span class="verifiedSpan">' + player + ' (' + role + ')</span>');
+            var selector = $('#' + type + (gameRoles[type] - availableRoles[type]));
+            selector.html('<span class="verifiedSpan">' + player + ' (' + role + ')</span>');
+            
+            if ($(this).find('.dead').prop('checked')) {
+                selector.parent().css('background-color', 'rgba(255, 0, 0, 0.5)');
+            }
+            else {
+                selector.parent().css('background-color', 'white');
+            }
+            
             availableRoles[type] -= 1;
         }
     });
-    $('#mainTable tr').has(':checkbox:not(:checked)').each(function() {
+    $('#mainTable tr').has('.confirmed:not(:checked)').each(function() {
         var player = $(this).find('.player').val();
         var role = $(this).find('.role').val();
         var type = roles[role];
@@ -106,7 +115,7 @@ function generateResultsTable() {
 
 $(document).ready(function(){
     for (i = 0; i < 15; i++) {
-        $('#mainTable').append('<tr><td>' + (i + 1) + '</td><td><input class="player" type="text" tabindex=' + (i + 1) + '></td><td><select class="role"><option /></select></td><td><input class="confirmed" type="checkbox"></td></tr>')
+        $('#mainTable').append('<tr><td>' + (i + 1) + '</td><td><input class="player" type="text" tabindex=' + (i + 1) + '></td><td><select class="role"><option /></select></td><td><input class="confirmed" type="checkbox"></td><td><input class="dead" type="checkbox"></td></tr>')
     }
     
     for (let role in roles) {
@@ -120,7 +129,18 @@ $(document).ready(function(){
         }
     }
     
-    $('.role, .confirmed').change(function() {
+    $('.dead').change(function() {
+        var selector = $(this).parent().parent().find('.confirmed');
+        if ($(this).prop('checked')) {
+            selector.prop('checked', true);
+            selector.prop('disabled', true);
+        }
+        else {
+            selector.prop('disabled', false);
+        }
+    });
+    
+    $('.role, .confirmed, .dead').change(function() {
         generateResultsTable();
     });
 });
