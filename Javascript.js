@@ -1,33 +1,33 @@
 var roles = {
-    INVESTIGATOR: "TI",
-    LOOKOUT: "TI",
-    SHERIFF: "TI",
-    SPY: "TI",
-    JAILOR: "J",
-    VETERAN: "TK",
-    VIGILANTE: "TK",
-    BODYGUARD: "TP",
-    DOCTOR: "TP",
-    ESCORT: "TS",
-    MAYOR: "TS",
-    MEDIUM: "TS",
-    RETRIBUTIONIST: "TS",
-    TRANSPORTER: "TS",
-    DISGUISER: "MAF",
-    FORGER: "MAF",
-    FRAMER: "MAF",
-    JANITOR: "MAF",
-    GODFATHER: "MAF",
-    MAFIOSO: "MAF",
-    BLACKMAILER: "MAF",
-    CONSIGLIERE: "MAF",
-    CONSORT: "MAF",
-    EXECUTIONER: "NE",
-    JESTER: "NE",
-    WITCH: "NE",
-    ARSONIST: "NK",
-    SERIAL_KILLER: "NK",
-    WEREWOLF: "NK"
+    Investigator: "TI",
+    Lookout: "TI",
+    Sheriff: "TI",
+    Spy: "TI",
+    Jailor: "J",
+    Veteran: "TK",
+    Vigilante: "TK",
+    Bodyguard: "TP",
+    Doctor: "TP",
+    Escort: "TS",
+    Mayor: "TS",
+    Medium: "TS",
+    Retributionist: "TS",
+    Transporter: "TS",
+    Disguiser: "MAF",
+    Forger: "MAF",
+    Framer: "MAF",
+    Janitor: "MAF",
+    Godfather: "MAF",
+    Mafioso: "MAF",
+    Blackmailer: "MAF",
+    Consigliere: "MAF",
+    Consort: "MAF",
+    Executioner: "NE",
+    Jester: "NE",
+    Witch: "NE",
+    Arsonist: "NK",
+    Serial_Killer: "NK",
+    Werewolf: "NK"
 };
 
 var gameRoles = {
@@ -65,6 +65,7 @@ function generateRoleCounts() {
 
 function generateResultsTable() {
     var availableRoles = generateRoleCounts();
+    $('.roleResult').text('');
     $('#mainTable tr').has(':checkbox:checked').each(function() {
         var player = $(this).find('.player').val();
         var role = $(this).find('.role').val();
@@ -76,10 +77,10 @@ function generateResultsTable() {
         
         //if there is a conflict
         if (availableRoles[type] < 1) {
-            $('#' + type + '0').append(' - <span class="verifiedSpan">' + player + '</span>');
+            $('#' + type + '0').append(' - <span class="verifiedSpan">' + player + ' (' + role + ')</span>');
         }
         else {
-            $('#' + type + (gameRoles[type] - availableRoles[type])).html('<span class="verifiedSpan">' + player + '</span>');
+            $('#' + type + (gameRoles[type] - availableRoles[type])).html('<span class="verifiedSpan">' + player + ' (' + role + ')</span>');
             availableRoles[type] -= 1;
         }
     });
@@ -94,10 +95,10 @@ function generateResultsTable() {
         
         //if there is a conflict
         if (availableRoles[type] < 1) {
-            $('#' + type + '0').append(' - <span class="unverifiedSpan">' + player + '</span>');
+            $('#' + type + '0').append(' - <span class="unverifiedSpan">' + player + ' (' + role + ')</span>');
         }
         else {
-            $('#' + type + (gameRoles[type] - availableRoles[type])).html('<span class="unverifiedSpan">' + player + '</span>');
+            $('#' + type + (gameRoles[type] - availableRoles[type])).html('<span class="unverifiedSpan">' + player + ' (' + role + ')</span>');
             availableRoles[type] -= 1;
         }
     });
@@ -105,7 +106,7 @@ function generateResultsTable() {
 
 $(document).ready(function(){
     for (i = 0; i < 15; i++) {
-        $('#mainTable').append('<tr><td><input class="player" type="text" tabindex=' + (i + 1) + '></td><td><select class="role"><option /></select></td><td><input class="confirmed" type="checkbox"></td></tr>')
+        $('#mainTable').append('<tr><td>' + (i + 1) + '</td><td><input class="player" type="text" tabindex=' + (i + 1) + '></td><td><select class="role"><option /></select></td><td><input class="confirmed" type="checkbox"></td></tr>')
     }
     
     for (let role in roles) {
@@ -115,7 +116,7 @@ $(document).ready(function(){
     //generate initial results table
     for (let role in gameRoles) {
         for (i = 0; i < gameRoles[role]; i++) {
-            $('#resultsTable').append('<tr><td>' + prettyPrint[role] + '</td><td id="' + role + i + '"></td></tr>');
+            $('#resultsTable').append('<tr><td>' + prettyPrint[role] + '</td><td id="' + role + i + '" class="roleResult"></td></tr>');
         }
     }
     
