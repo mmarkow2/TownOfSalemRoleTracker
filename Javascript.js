@@ -105,7 +105,7 @@ function generateResultsTable() {
 
 $(document).ready(function(){
     for (i = 0; i < 16; i++) {
-        $('#mainTable').append('<tr><td><input class="player" type="text"></td><td><select class="role"><option /></select></td><td><input class="confirmed" type="checkbox"></td></tr>')
+        $('#mainTable').append('<tr><td><input class="player" type="text" tabindex=' + (i + 1) + '></td><td><select class="role"><option /></select></td><td><input class="confirmed" type="checkbox"></td></tr>')
     }
     
     for (let role in roles) {
