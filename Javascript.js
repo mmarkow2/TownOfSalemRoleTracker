@@ -142,5 +142,11 @@ $(document).ready(function(){
     
     $('.role, .confirmed, .dead').change(function() {
         generateResultsTable();
+        $('#unclaimedTable').find('tr:not(:first)').remove();
+        $('#mainTable tr').filter(function() {
+            return $(this).find('.role').val() == '';
+        }).each(function(index) {
+            $('#unclaimedTable').append('<tr><td>' + $(this).find('.player').val() + '</td></tr>');
+        });
     });
 });

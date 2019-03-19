@@ -7,14 +7,10 @@
 #tableWrapper table {
     margin: 10px;
 }
-#mainTable {
+.tableClass {
     display: inline-block;
     border: 1px solid black;
-}
-
-#resultsTable {
-    display: inline-block;
-    border: 1px solid black;
+    vertical-align: top;
 }
 
 .unverifiedSpan {
